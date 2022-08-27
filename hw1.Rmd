@@ -1,0 +1,46 @@
+---
+title: 'MATH 498 HW1'
+author: "Drew Remmenga"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+```{r}
+library(fda)
+```
+1.1
+Assume that the median value does not have the maximum depth. Let b be the value with the maximum depth. a is the median yet lays exactly between fifty percent of the data. a is therefore deeper than b. This produces a contradiction so a must equal b. 
+2.1
+Consider the values directly above and below the deepest value. Call them $$z_{p-1}$$ and $$z_{p+1}$$. Now consider the log transformation. $$log(z_{p-1}) < log(y_{p}) < log(y_{p+1})$$. This demonstrates that under this transformation the deepest value remains the deepest value.
+2.2
+Consider the functions $$z_{p-1}$$ and $$z_{p+1}$$. For each of these functions if $$y_{p-1} < y_{p} < y_{p+1}$$ then $$z_{p-1} < z_{p} < z_{p+1}$$. So the depth of z_{i} = the depth of y_{i}.
+```{r}
+load("C:/Users/Drewr/Documents/School/MATH498/HW1/BB10K.rda")
+split<- as.matrix(BB10K[,4 + 1:6])
+split <- t( split)
+indM<- BB10K$DIV == "M30"
+indF<- BB10K$DIV == "F30"
+split30F<- split[,indF]
+timeF30<- BB10K$TIME[indF]
+split30M<- split[,indM]
+```
+3.1
+Split30F is functional based on times, the split, and the mile. You can tell it's a function because each data point has neighbors and a unique vertical position.
+3.2
+There is missing data to the function.
+3.3
+```{r}
+boxplot(t(split30F))
+```
+There are outliers based on the classic boxplot criteria.
+3.4
+```{r}
+fbplot(t(split30F))
+```
+There are outliers based on the functional boxplot. This gives some insight into how the function actually looks as well as the median function.
+4.1
+```{r}
+split30FCentered <- scale(split30F, center=TRUE, scale=FALSE)
+fbplot(t(split30FCentered))
+```
+There is not a relationship between depth and runners split times. For outliers there is. 
